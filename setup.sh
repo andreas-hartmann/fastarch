@@ -33,4 +33,20 @@ case "$installation_type" in
         ;;
 esac
 
+# Change the default shell to fish for the current user
+if command -v fish > /dev/null 2>&1; then
+    echo "Changing the default shell to fish for the current user."
+    chsh -s "$(command -v fish)"
+else
+    echo "Fish shell installation failed or fish not found."
+fi
+
+# Merge the .config directory into ~/.config for the current user
+if [ -d ".config" ]; then
+    echo "Merging .config into the user's ~/.config directory."
+    cp -r .config/* ~/.config/
+else
+    echo ".config directory not found. Skipping merge."
+fi
+
 echo "Installation complete."
